@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2026 Corey Bertram
 # SPDX-License-Identifier: MIT
 
-"""code.py style example for CircuitPython ESP32 boards.
+"""code.py style example for CircuitPython boards with built-in WiFi.
 
 Create a secrets.py file on CIRCUITPY with:
 
@@ -58,7 +58,7 @@ while True:
     client.gauge(
         "circuitpython.cpu.temperature",
         microcontroller.cpu.temperature,
-        tags=["source:esp32"],
+        tags=["source:wifi"],
     )
     client.gauge("circuitpython.uptime", now)
 

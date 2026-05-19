@@ -3,9 +3,10 @@
 CircuitPython_DataDog is a small CircuitPython 9.x library for sending custom
 metrics to the Datadog HTTP API at `POST /api/v2/series`.
 
-The library is designed for ESP32-class CircuitPython boards. It has no runtime
-dependencies beyond `time` and the `adafruit_requests.Session` object supplied
-by your own WiFi setup code.
+The library is designed for network-capable CircuitPython boards, including
+boards with built-in WiFi, Ethernet, or a supported network coprocessor. It has
+no runtime dependencies beyond `time` and the `adafruit_requests.Session` object
+supplied by your own network setup code.
 
 ## Installation
 
@@ -30,7 +31,7 @@ CircuitPython_DataDog/
 ```
 
 You are responsible for installing `adafruit_requests` and its required support
-files on the device, and for connecting WiFi before creating the client.
+files on the device, and for connecting the network before creating the client.
 
 ## Usage
 
@@ -41,6 +42,8 @@ import wifi
 import adafruit_requests
 from datadog import DatadogClient
 
+# This setup is for boards with built-in WiFi. If your board uses Ethernet
+# or an external coprocessor, create the session for that network interface.
 wifi.radio.connect("ssid", "password")
 pool = socketpool.SocketPool(wifi.radio)
 session = adafruit_requests.Session(pool, ssl.create_default_context())
@@ -49,7 +52,7 @@ client = DatadogClient(
     session,
     "DATADOG_API_KEY",
     site="datadoghq.com",
-    default_tags=["runtime:circuitpython", "board:esp32"],
+    default_tags=["runtime:circuitpython", "board:my-board"],
 )
 
 client.gauge("circuitpython.temperature", 24.5, tags=["room:lab"])
@@ -121,8 +124,8 @@ The client prepends `api.` when needed, so `us3.datadoghq.com` becomes
 
 ## Notes
 
-- WiFi setup, TLS setup, NTP/RTC time setup, and the requests session are caller
-  responsibilities.
+- Network setup, TLS setup, NTP/RTC time setup, and the requests session are
+  caller responsibilities.
 - Datadog expects metric timestamps to be close to current Unix time. If your
   board does not have correct time after boot, set the RTC before sending
   metrics.
