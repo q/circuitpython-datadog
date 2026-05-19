@@ -1,6 +1,6 @@
-# CircuitPython_DataDog
+# circuitpython-datadog
 
-CircuitPython_DataDog is a small CircuitPython 9.x library for sending custom
+A small CircuitPython 9.x library for sending custom
 metrics to the Datadog HTTP API at `POST /api/v2/series`.
 
 The library is designed for network-capable CircuitPython boards, including
@@ -22,7 +22,7 @@ CIRCUITPY/
 This repository follows the usual single-file CircuitPython library layout:
 
 ```text
-CircuitPython_DataDog/
+circuitpython-datadog/
 |-- datadog.py
 |-- examples/
 |   `-- basic_metrics.py

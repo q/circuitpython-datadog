@@ -11,7 +11,7 @@ import time
 
 
 __version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/your-name/CircuitPython_DataDog.git"
+__repo__ = "https://github.com/q/circuitpython-datadog.git"
 
 _TYPE_COUNT = 1
 _TYPE_RATE = 2
