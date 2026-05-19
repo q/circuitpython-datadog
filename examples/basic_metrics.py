@@ -58,7 +58,7 @@ while True:
     client.gauge(
         "circuitpython.cpu.temperature",
         microcontroller.cpu.temperature,
-        tags=["source:wifi"],
+        tags=["source:board"],
     )
     client.gauge("circuitpython.uptime", now)
 
