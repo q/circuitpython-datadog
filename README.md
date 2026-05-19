@@ -26,6 +26,8 @@ circuitpython-datadog/
 |-- datadog.py
 |-- examples/
 |   `-- basic_metrics.py
+|-- tests/
+|   `-- test_datadog.py
 |-- README.md
 `-- LICENSE
 ```
@@ -106,6 +108,19 @@ clears the buffer after permanent failure to avoid memory buildup in sensor
 loops.
 
 Each request response is closed with `response.close()`.
+
+## Testing
+
+The core client can be tested on desktop Python because network access is
+injected through the `session` object:
+
+```sh
+python3 -B -m unittest discover -s tests
+```
+
+The tests use fake sessions and responses. They validate payload shape, retry
+behavior, response cleanup, URL construction, and buffer clearing without making
+real network requests.
 
 ## Supported Datadog Sites
 
