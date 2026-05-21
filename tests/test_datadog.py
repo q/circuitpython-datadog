@@ -88,6 +88,20 @@ class DatadogClientTest(unittest.TestCase):
         self.assertEqual(series[2]["type"], 2)
         self.assertEqual(series[2]["tags"], ["env:test"])
 
+    def test_accepts_explicit_metric_timestamps(self):
+        session = FakeSession([202])
+        client = datadog.DatadogClient(session, "api-key")
+
+        client.gauge("sensor.temperature", 22.5, timestamp=1710000123)
+        client.count("button.press", 1, timestamp=1710000124)
+        client.rate("sensor.samples_per_second", 2.0, timestamp=1710000125)
+
+        self.assertTrue(client.flush())
+        series = session.posts[0]["json"]["series"]
+        self.assertEqual(series[0]["points"][0]["timestamp"], 1710000123)
+        self.assertEqual(series[1]["points"][0]["timestamp"], 1710000124)
+        self.assertEqual(series[2]["points"][0]["timestamp"], 1710000125)
+
     def test_constructs_datadog_site_urls(self):
         cases = (
             ("datadoghq.com", "https://api.datadoghq.com/api/v2/series"),

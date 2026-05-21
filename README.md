@@ -103,6 +103,12 @@ client.rate("sensor.samples_per_second", 2.0)
 client.flush()
 ```
 
+Pass `timestamp=` to use an explicit Unix timestamp instead of `time.time()`:
+
+```python
+client.gauge("sensor.temperature", 23.8, timestamp=1710000123)
+```
+
 `flush()` returns `True` when Datadog accepts the payload with a 2xx HTTP status.
 It returns `False` on network errors, socket errors, HTTP error status codes, or
 unexpected request failures. It never intentionally raises an exception, and it

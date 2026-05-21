@@ -49,17 +49,17 @@ class DatadogClient:
             "Content-Type": "application/json",
         }
 
-    def gauge(self, metric, value, tags=None):
+    def gauge(self, metric, value, tags=None, timestamp=None):
         """Buffer a gauge metric."""
-        self._add_metric(metric, value, _TYPE_GAUGE, tags)
+        self._add_metric(metric, value, _TYPE_GAUGE, tags, timestamp)
 
-    def count(self, metric, value, tags=None):
+    def count(self, metric, value, tags=None, timestamp=None):
         """Buffer a count metric."""
-        self._add_metric(metric, value, _TYPE_COUNT, tags)
+        self._add_metric(metric, value, _TYPE_COUNT, tags, timestamp)
 
-    def rate(self, metric, value, tags=None):
+    def rate(self, metric, value, tags=None, timestamp=None):
         """Buffer a rate metric."""
-        self._add_metric(metric, value, _TYPE_RATE, tags)
+        self._add_metric(metric, value, _TYPE_RATE, tags, timestamp)
 
     def flush(self):
         """Send buffered metrics.
@@ -111,9 +111,12 @@ class DatadogClient:
         self._buffer = []
         return False
 
-    def _add_metric(self, metric, value, metric_type, tags):
+    def _add_metric(self, metric, value, metric_type, tags, timestamp):
+        if timestamp is None:
+            timestamp = time.time()
+
         point = {
-            "timestamp": int(time.time()),
+            "timestamp": int(timestamp),
             "value": value,
         }
         item = {
