@@ -1,5 +1,7 @@
 # circuitpython-datadog
 
+[![Tests](https://github.com/q/circuitpython-datadog/actions/workflows/tests.yml/badge.svg)](https://github.com/q/circuitpython-datadog/actions/workflows/tests.yml)
+
 A small CircuitPython 9.x library for sending custom
 metrics to the Datadog HTTP API at `POST /api/v2/series`.
 
